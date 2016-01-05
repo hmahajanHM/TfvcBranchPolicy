@@ -17,6 +17,7 @@
     <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -26,6 +27,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -88,7 +90,10 @@
     <Compile Include="Editor\ViewModels\CodeReviewBranchPolicyViewModel.cs" />
     <Compile Include="Editor\ViewModels\IBranchPatternViewModel.cs" />
     <Compile Include="Editor\ViewModels\IBranchPolicyViewModel.cs" />
+    <Compile Include="Editor\ViewModels\ITeamFoundationTeamViewModel.cs" />
     <Compile Include="Editor\ViewModels\LockBranchPolicyViewModel.cs" />
+    <Compile Include="Editor\ViewModels\TeamFoundationTeamFakeViewModel.cs" />
+    <Compile Include="Editor\ViewModels\TeamFoundationTeamViewModel.cs" />
     <Compile Include="Editor\ViewModels\WorkItemBranchPolicyViewModel.cs" />
     <Compile Include="TfvcBranchPolicy.cs" />
     <Compile Include="Common\BranchPatternReviewer.cs" />
