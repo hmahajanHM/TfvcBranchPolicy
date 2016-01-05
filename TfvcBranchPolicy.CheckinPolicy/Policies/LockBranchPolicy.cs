@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
-using Microsoft.TeamFoundation.WorkItemTracking.Client;
 
 namespace TfvcBranchPolicy.CheckinPolicy.Common
 {
@@ -70,40 +69,17 @@ namespace TfvcBranchPolicy.CheckinPolicy.Common
             }
             else if (IsLocked && IsByPassEnabled)
             {
-                bool foundByPassMatchOnWI = false;
-                foreach (var workItem in pendingCheckin.WorkItems.CheckedWorkItems)// List of all WI associated with current CheckIn
+                if ((pendingCheckin.PendingChanges.Comment != null) && (BypassString != null))
                 {
-                    foreach (Revision r in workItem.WorkItem.Revisions)// Check all History comments for Bypass string.
-                    {
-                        Field f = r.Fields["History"];
-                        if (f.Value != null)
-                        {
-                            if (System.Text.RegularExpressions.Regex.Match(f.Value.ToString(), BypassString).Success)
-                            {
-                                foundByPassMatchOnWI = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (foundByPassMatchOnWI)
-                {
-                    lockedWithUnmatchedBypass = false;
-                }
-                else
-                {
-                    if ((pendingCheckin.PendingChanges.Comment != null) && (BypassString != null))
-                    {
-                        if (!System.Text.RegularExpressions.Regex.Match(pendingCheckin.PendingChanges.Comment, BypassString).Success)
-                        {
-                            lockedWithUnmatchedBypass = true;
-                        }
-                    }
-                    else
+
+                    if (!System.Text.RegularExpressions.Regex.Match(pendingCheckin.PendingChanges.Comment, BypassString).Success)
                     {
                         lockedWithUnmatchedBypass = true;
                     }
-
+                }
+                else
+                {
+                    lockedWithUnmatchedBypass = true;
                 }
             }
             else
