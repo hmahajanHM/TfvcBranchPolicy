@@ -73,12 +73,11 @@ namespace TfvcBranchPolicy.CheckinPolicy.Common
                 bool foundByPassMatchOnWI = false;
                 foreach (var workItem in pendingCheckin.WorkItems.CheckedWorkItems)// List of all WI associated with current CheckIn
                 {
-                    foreach (Revision r in workItem.WorkItem.Revisions)// Check all History comments for Bypass string.
+                    if (!string.IsNullOrWhiteSpace(workItem.WorkItem.Tags))
                     {
-                        Field f = r.Fields["History"];
-                        if (f.Value != null)
+                        foreach (var tag in workItem.WorkItem.Tags.Split(';'))// Check all Tags for Bypass string.
                         {
-                            if (System.Text.RegularExpressions.Regex.Match(f.Value.ToString(), BypassString).Success)
+                            if (System.Text.RegularExpressions.Regex.Match(tag, BypassString).Success)
                             {
                                 foundByPassMatchOnWI = true;
                                 break;
